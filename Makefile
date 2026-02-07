@@ -1,4 +1,4 @@
-.PHONY: help build-linux build-windows build-macos build-all clean docker-build docker-shell
+.PHONY: help build-linux build-windows build-windows-arm64 build-macos build-all clean docker-build docker-shell
 
 # Default target
 help:
@@ -6,15 +6,17 @@ help:
 	@echo "======================"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make build-linux    - Build Linux executable (works from any host via Docker)"
-	@echo "  make build-windows  - Build Windows executable (works from any host via Docker)"
-	@echo "  make build-macos    - Build macOS executable (requires macOS host)"
-	@echo "  make build-all      - Build for all platforms"
-	@echo "  make clean          - Remove build artifacts"
-	@echo "  make docker-build   - Build Docker image"
-	@echo "  make docker-shell   - Open shell in Docker container"
+	@echo "  make build-linux        - Build Linux executable (works from any host via Docker)"
+	@echo "  make build-windows      - Build Windows executable (x86_64 hosts via Docker)"
+	@echo "  make build-windows-arm64 - Build Windows executable (Apple Silicon via Docker)"
+	@echo "  make build-macos        - Build macOS executable (requires macOS host)"
+	@echo "  make build-all          - Build for all platforms"
+	@echo "  make clean              - Remove build artifacts"
+	@echo "  make docker-build       - Build Docker image"
+	@echo "  make docker-shell       - Open shell in Docker container"
 	@echo ""
-	@echo "Note: Linux and Windows builds use Docker and work from any host."
+	@echo "Note: Linux and Windows builds use Docker."
+	@echo "      On Apple Silicon (M1/M2/M3), use build-windows-arm64."
 	@echo "      macOS builds require macOS due to Apple licensing."
 	@echo ""
 
@@ -38,10 +40,30 @@ build-linux: docker-build
 build-windows:
 	@echo "Building Windows executable..."
 	@echo "Building Docker image for Windows (this may take a few minutes on first run)..."
-	docker build -f Dockerfile.windows -t $(DOCKER_IMAGE)-windows .
+	docker build -f Dockerfile.windows -t $(DOCKER_IMAGE)-windows . || \
+		(echo ""; \
+		 echo "ERROR: Docker build failed."; \
+		 echo ""; \
+		 echo "This may be due to platform compatibility issues."; \
+		 echo ""; \
+		 echo "If you're on Apple Silicon (M1/M2/M3), try:"; \
+		 echo "  make build-windows-arm64"; \
+		 echo ""; \
+		 echo "Or build natively on Windows using: build-windows.bat"; \
+		 exit 1)
 	@mkdir -p dist
 	@echo "Running Windows build in Docker..."
-	docker run --rm -v "$$(pwd)/dist:/wine/drive_c/app/dist" $(DOCKER_IMAGE)-windows
+	docker run --rm -v "$$(pwd):/src" $(DOCKER_IMAGE)-windows
+	@echo "Windows executable built: dist/HistoQuiz.exe"
+
+# Build for Windows on ARM64 (Apple Silicon)
+build-windows-arm64:
+	@echo "Building Windows executable for ARM64 hosts (Apple Silicon)..."
+	@echo "Building Docker image with platform emulation..."
+	docker build --platform linux/amd64 -f Dockerfile.windows -t $(DOCKER_IMAGE)-windows .
+	@mkdir -p dist
+	@echo "Running Windows build in Docker..."
+	docker run --platform linux/amd64 --rm -v "$$(pwd):/src" $(DOCKER_IMAGE)-windows
 	@echo "Windows executable built: dist/HistoQuiz.exe"
 
 # Build for macOS

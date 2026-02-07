@@ -8,6 +8,14 @@ This document explains how to build standalone executables for HistoQuiz on Wind
 - Make (usually pre-installed on Linux/macOS, available via Chocolatey/MinGW on Windows)
 - For macOS builds: Access to a macOS system
 
+## Platform Support
+
+- **Linux**: ✅ Docker-based, works from any host
+- **Windows**: ✅ Docker-based with Wine, works from x86_64/AMD64 hosts
+  - ⚠️ Apple Silicon (M1/M2/M3): Use `make build-windows-arm64` (slower due to emulation)
+  - Alternative: Build natively on Windows using `build-windows.bat`
+- **macOS**: ⚠️ Native only (Apple licensing restrictions)
+
 ## Quick Start
 
 ### Build for Linux (from any host)
@@ -16,11 +24,18 @@ make build-linux
 ```
 The executable will be in `dist/HistoQuiz`.
 
-### Build for Windows (from any host)
+### Build for Windows (from x86_64/AMD64 host)
 ```bash
 make build-windows
 ```
 The executable will be in `dist/HistoQuiz.exe`.
+
+### Build for Windows (from Apple Silicon - M1/M2/M3)
+```bash
+make build-windows-arm64
+```
+The executable will be in `dist/HistoQuiz.exe`.
+**Note:** This uses platform emulation and will be slower on first run.
 
 ### Build for macOS (requires macOS)
 ```bash
@@ -112,12 +127,21 @@ Then log out and back in.
 ### Build too slow
 The first build takes longer as Docker downloads images. Subsequent builds are faster.
 
-### Windows build fails
-The Wine-based Docker build can take some time on first run. If it fails:
-1. Ensure you have enough disk space (Wine images are large)
-2. Check Docker logs for specific errors
-3. Try building again - sometimes Wine initialization needs a retry
-4. As a fallback, you can build natively on Windows using `build-windows.bat`
+### Windows build fails with "no match for platform in manifest"
+This error occurs on Apple Silicon (ARM64) Macs because the Docker image doesn't support ARM64 natively.
+
+**Solution:** Use the ARM64-specific target:
+```bash
+make build-windows-arm64
+```
+This will use platform emulation (slower but works).
+
+### Windows build fails with PyInstaller version error
+The cdrx/pyinstaller-windows image uses an older Python version. This is expected and handled by the build process.
+
+If you see errors about requirements.txt:
+1. Use the Makefile targets (`make build-windows` or `make build-windows-arm64`)
+2. Or build natively on Windows using `build-windows.bat`
 
 ### macOS build on non-macOS
 This is not supported due to Apple's license restrictions. Options:
@@ -149,7 +173,7 @@ docker run --rm -v "$(pwd)/dist:/app/dist" histoquiz-builder pyinstaller --clean
 
 # Windows (with Docker - cross-platform)
 docker build -f Dockerfile.windows -t histoquiz-builder-windows .
-docker run --rm -v "$(pwd)/dist:/wine/drive_c/app/dist" histoquiz-builder-windows
+docker run --rm -v "$(pwd)/dist:/app/dist" histoquiz-builder-windows
 
 # Linux (without Docker)
 pip3 install -r requirements.txt pyinstaller

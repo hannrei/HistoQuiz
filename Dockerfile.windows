@@ -1,15 +1,16 @@
 # Windows build environment using Wine for cross-compilation
-# Based on a proven Wine + Python setup for PyInstaller
-FROM tobix/pywine:3.11
+# Uses cdrx/pyinstaller-windows image (Python 3.6 with PyInstaller 5.x)
+FROM cdrx/pyinstaller-windows
 
-WORKDIR /wine/drive_c/app
+WORKDIR /src
 
 # Copy application files
 COPY . .
 
-# Install dependencies
-RUN wine python -m pip install --upgrade pip && \
-    wine python -m pip install -r requirements.txt pyinstaller
+# The cdrx image has PyInstaller pre-installed
+# Create empty requirements.txt to avoid version conflicts during build
+RUN echo "# Build-time placeholder - PyInstaller already installed" > requirements.txt
 
-# Default command to build
-CMD ["wine", "python", "-m", "PyInstaller", "--clean", "HistoQuiz.spec"]
+# Entry point runs pyinstaller
+CMD ["--clean", "HistoQuiz.spec"]
+
