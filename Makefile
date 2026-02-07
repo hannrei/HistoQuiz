@@ -6,18 +6,19 @@ help:
 	@echo "======================"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make build-linux        - Build Linux executable (works from any host via Docker)"
-	@echo "  make build-windows      - Build Windows executable (x86_64 hosts via Docker)"
-	@echo "  make build-windows-arm64 - Build Windows executable (Apple Silicon via Docker)"
-	@echo "  make build-macos        - Build macOS executable (requires macOS host)"
-	@echo "  make build-all          - Build for all platforms"
-	@echo "  make clean              - Remove build artifacts"
-	@echo "  make docker-build       - Build Docker image"
-	@echo "  make docker-shell       - Open shell in Docker container"
+	@echo "  make build-linux         - Build Linux executable (works from any host via Docker)"
+	@echo "  make build-windows       - Build Windows executable (x86_64/AMD64 hosts only)"
+	@echo "  make build-windows-arm64 - Show alternatives for Apple Silicon (ARM64 not supported)"
+	@echo "  make build-macos         - Build macOS executable (requires macOS host)"
+	@echo "  make build-all           - Build for all platforms"
+	@echo "  make clean               - Remove build artifacts"
+	@echo "  make docker-build        - Build Docker image"
+	@echo "  make docker-shell        - Open shell in Docker container"
 	@echo ""
-	@echo "Note: Linux and Windows builds use Docker."
-	@echo "      On Apple Silicon (M1/M2/M3), use build-windows-arm64."
-	@echo "      macOS builds require macOS due to Apple licensing."
+	@echo "Platform compatibility:"
+	@echo "  - Linux builds work from any host with Docker"
+	@echo "  - Windows builds require x86_64/AMD64 host (Wine doesn't work on Apple Silicon)"
+	@echo "  - macOS builds require macOS host due to Apple licensing"
 	@echo ""
 
 # Docker image name
@@ -59,12 +60,26 @@ build-windows:
 # Build for Windows on ARM64 (Apple Silicon)
 build-windows-arm64:
 	@echo "Building Windows executable for ARM64 hosts (Apple Silicon)..."
-	@echo "Building Docker image with platform emulation..."
-	docker build --platform linux/amd64 -f Dockerfile.windows -t $(DOCKER_IMAGE)-windows .
-	@mkdir -p dist
-	@echo "Running Windows build in Docker..."
-	docker run --platform linux/amd64 --rm -v "$$(pwd):/src" $(DOCKER_IMAGE)-windows
-	@echo "Windows executable built: dist/HistoQuiz.exe"
+	@echo ""
+	@echo "⚠️  WARNING: Wine does not work reliably under platform emulation."
+	@echo ""
+	@echo "Due to technical limitations, Windows builds on Apple Silicon require"
+	@echo "one of the following approaches:"
+	@echo ""
+	@echo "Option 1: Use GitHub Actions (Recommended)"
+	@echo "  - Push your code to GitHub"
+	@echo "  - GitHub Actions will build for all platforms automatically"
+	@echo ""
+	@echo "Option 2: Build on actual Windows"
+	@echo "  - Use a Windows machine or VM"
+	@echo "  - Run: build-windows.bat"
+	@echo ""
+	@echo "Option 3: Use a cloud build service"
+	@echo "  - Use Docker on a x86_64 Linux VM in the cloud"
+	@echo "  - Run: make build-windows"
+	@echo ""
+	@echo "We cannot proceed with the Wine-based build on this platform."
+	@exit 1
 
 # Build for macOS
 build-macos:

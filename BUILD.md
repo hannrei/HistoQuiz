@@ -12,9 +12,27 @@ This document explains how to build standalone executables for HistoQuiz on Wind
 
 - **Linux**: ✅ Docker-based, works from any host
 - **Windows**: ✅ Docker-based with Wine, works from x86_64/AMD64 hosts
-  - ⚠️ Apple Silicon (M1/M2/M3): Use `make build-windows-arm64` (slower due to emulation)
-  - Alternative: Build natively on Windows using `build-windows.bat`
+  - ❌ Apple Silicon (M1/M2/M3): Wine doesn't work under emulation - see alternatives below
 - **macOS**: ⚠️ Native only (Apple licensing restrictions)
+
+### Building on Apple Silicon (M1/M2/M3)
+
+Due to technical limitations with Wine under platform emulation, Windows builds cannot be completed directly on Apple Silicon Macs. Use one of these alternatives:
+
+**Option 1: GitHub Actions (Recommended)**
+- A GitHub Actions workflow is included in `.github/workflows/build-executables.yml`
+- Push your code to GitHub
+- The workflow automatically builds for Linux, Windows, and macOS
+- Download the built executables from Actions artifacts
+- Enable Actions in your repository settings if needed
+
+**Option 2: Build on Windows**
+- Use an actual Windows machine or VM
+- Run `build-windows.bat`
+
+**Option 3: Use Cloud Build**
+- Use a cloud x86_64 Linux VM (AWS, GCP, Azure, etc.)
+- Run `make build-windows` on that VM
 
 ## Quick Start
 
@@ -30,12 +48,9 @@ make build-windows
 ```
 The executable will be in `dist/HistoQuiz.exe`.
 
-### Build for Windows (from Apple Silicon - M1/M2/M3)
-```bash
-make build-windows-arm64
-```
-The executable will be in `dist/HistoQuiz.exe`.
-**Note:** This uses platform emulation and will be slower on first run.
+### Build for Windows (from Apple Silicon)
+Apple Silicon Macs cannot build Windows executables locally due to Wine limitations.
+Run `make build-windows-arm64` to see available alternatives.
 
 ### Build for macOS (requires macOS)
 ```bash
@@ -92,13 +107,22 @@ These scripts automatically detect and use Docker when available (Linux), or fal
 
 ## Platform-Specific Notes
 
-### Building on Linux/macOS
+### Building on Linux/macOS (x86_64/AMD64)
 All commands work directly:
 ```bash
 make build-linux
 make build-windows
 make build-macos  # Only on macOS
 ```
+
+### Building on Apple Silicon (ARM64)
+Linux and macOS builds work:
+```bash
+make build-linux    # Works
+make build-macos    # Works
+```
+
+Windows builds are not supported locally. Run `make build-windows-arm64` for alternatives.
 
 ### Building on Windows
 You need Make installed. Options:
@@ -130,17 +154,24 @@ The first build takes longer as Docker downloads images. Subsequent builds are f
 ### Windows build fails with "no match for platform in manifest"
 This error occurs on Apple Silicon (ARM64) Macs because the Docker image doesn't support ARM64 natively.
 
-**Solution:** Use the ARM64-specific target:
-```bash
-make build-windows-arm64
-```
-This will use platform emulation (slower but works).
+**This is a known limitation.** Windows executables cannot be built locally on Apple Silicon.
+Run `make build-windows-arm64` to see available alternatives (GitHub Actions, cloud build, or native Windows).
+
+### Windows build fails with Wine errors on Apple Silicon
+Wine does not work reliably under platform emulation (QEMU/Rosetta). This includes errors like:
+- `virtual.c: alloc_pages_vprot: Assertion failed`
+- `failed to start wineboot`
+
+**Solution:** Windows executables cannot be built locally on Apple Silicon. Use one of these alternatives:
+1. **GitHub Actions** - Automated builds on GitHub's infrastructure
+2. **Cloud build** - Use an x86_64 Linux VM (AWS, Azure, GCP)
+3. **Native Windows** - Build directly on a Windows machine using `build-windows.bat`
 
 ### Windows build fails with PyInstaller version error
 The cdrx/pyinstaller-windows image uses an older Python version. This is expected and handled by the build process.
 
 If you see errors about requirements.txt:
-1. Use the Makefile targets (`make build-windows` or `make build-windows-arm64`)
+1. Use the Makefile targets (`make build-windows`)
 2. Or build natively on Windows using `build-windows.bat`
 
 ### macOS build on non-macOS
@@ -155,6 +186,38 @@ Remove all build artifacts:
 ```bash
 make clean
 ```
+
+## GitHub Actions (Automated Builds)
+
+A GitHub Actions workflow is included that automatically builds executables for all platforms. This is especially useful for Apple Silicon users who cannot build Windows executables locally.
+
+### How to Use
+
+1. **Push your code to GitHub:**
+   ```bash
+   git push origin main
+   ```
+
+2. **Trigger the workflow:**
+   - Automatically runs on push to `main` branch
+   - Automatically runs on pull requests
+   - Manually trigger from the Actions tab
+
+3. **Download artifacts:**
+   - Go to the Actions tab in your GitHub repository
+   - Click on the latest workflow run
+   - Download the artifacts for each platform:
+     - `HistoQuiz-Linux` - Linux executable
+     - `HistoQuiz-Windows` - Windows executable (.exe)
+     - `HistoQuiz-macOS` - macOS executable
+
+### Workflow File
+
+The workflow is defined in `.github/workflows/build-executables.yml`. It:
+- Builds Linux on Ubuntu runners using Docker
+- Builds Windows on Ubuntu runners using Docker  
+- Builds macOS on macOS runners natively
+- Uploads all executables as artifacts
 
 ## Advanced Usage
 
