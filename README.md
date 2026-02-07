@@ -29,7 +29,7 @@ Wenn du Python nicht installieren möchtest, kannst du eine standalone Executabl
 
 **Windows:**
 1. Öffne die Kommandozeile im Projekt-Ordner
-2. Führe aus: `build-windows.bat`
+2. Führe aus: `make build-windows` (mit Docker, von jedem System) oder `build-windows.bat` (nativ unter Windows)
 3. Die Executable findest du dann unter `dist\HistoQuiz.exe`
 4. Starte `HistoQuiz.exe` direkt, ohne Python!
 

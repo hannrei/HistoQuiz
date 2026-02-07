@@ -7,15 +7,14 @@ help:
 	@echo ""
 	@echo "Available targets:"
 	@echo "  make build-linux    - Build Linux executable (works from any host via Docker)"
-	@echo "  make build-windows  - Build Windows executable (best on Windows, or via CI/CD)"
+	@echo "  make build-windows  - Build Windows executable (works from any host via Docker)"
 	@echo "  make build-macos    - Build macOS executable (requires macOS host)"
 	@echo "  make build-all      - Build for all platforms"
 	@echo "  make clean          - Remove build artifacts"
 	@echo "  make docker-build   - Build Docker image"
 	@echo "  make docker-shell   - Open shell in Docker container"
 	@echo ""
-	@echo "Note: Windows builds work best natively on Windows or via GitHub Actions."
-	@echo "      Linux builds work from any host using Docker."
+	@echo "Note: Linux and Windows builds use Docker and work from any host."
 	@echo "      macOS builds require macOS due to Apple licensing."
 	@echo ""
 
@@ -35,27 +34,15 @@ build-linux: docker-build
 		pyinstaller --clean HistoQuiz.spec
 	@echo "Linux executable built: dist/HistoQuiz"
 
-# Build for Windows - different approach based on OS
+# Build for Windows using Docker with Wine
 build-windows:
 	@echo "Building Windows executable..."
-	@if command -v python3 > /dev/null 2>&1; then \
-		echo "Building with local Python..."; \
-		pip3 install -q -r requirements.txt pyinstaller 2>/dev/null || pip3 install --user -q -r requirements.txt pyinstaller; \
-		pyinstaller --clean HistoQuiz.spec; \
-		if [ -f "dist/HistoQuiz.exe" ]; then \
-			echo "Windows executable built: dist/HistoQuiz.exe"; \
-		elif [ -f "dist/HistoQuiz" ]; then \
-			echo "Note: Built on non-Windows system. Executable is: dist/HistoQuiz"; \
-		fi; \
-	else \
-		echo "Error: Python 3 not found."; \
-		echo ""; \
-		echo "To build Windows executables:"; \
-		echo "  1. On Windows: Install Python 3 and run 'make build-windows'"; \
-		echo "  2. Use GitHub Actions for automated multi-platform builds"; \
-		echo "  3. Build manually: pip install pyinstaller && pyinstaller HistoQuiz.spec"; \
-		exit 1; \
-	fi
+	@echo "Building Docker image for Windows (this may take a few minutes on first run)..."
+	docker build -f Dockerfile.windows -t $(DOCKER_IMAGE)-windows .
+	@mkdir -p dist
+	@echo "Running Windows build in Docker..."
+	docker run --rm -v "$$(pwd)/dist:/wine/drive_c/app/dist" $(DOCKER_IMAGE)-windows
+	@echo "Windows executable built: dist/HistoQuiz.exe"
 
 # Build for macOS
 build-macos:

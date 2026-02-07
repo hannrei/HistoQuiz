@@ -1,8 +1,11 @@
 @echo off
-REM Build script for Windows
-REM This script builds the HistoQuiz executable for Windows
+REM Build script for Windows (native build)
+REM For cross-platform builds, use: make build-windows (requires Docker)
+REM This script builds the HistoQuiz executable natively on Windows
 
-echo Building HistoQuiz for Windows...
+echo Building HistoQuiz for Windows (native build)...
+echo.
+echo Note: For Docker-based cross-platform build, use: make build-windows
 echo.
 
 REM Check if Python is installed

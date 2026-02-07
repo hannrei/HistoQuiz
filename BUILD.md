@@ -43,10 +43,10 @@ Note: macOS build will fail if not run on macOS.
 - **Works from any host OS via Docker**
 
 ### Windows Build
-- **Recommended:** Build natively on Windows using `build-windows.bat` or `make build-windows`
-- Uses local Python installation and PyInstaller
+- Uses Docker with Wine (Windows emulator)
+- Runs Python for Windows and PyInstaller through Wine
 - Outputs Windows PE executable (.exe)
-- Can also be built via GitHub Actions for CI/CD
+- **Works from any host OS via Docker**
 
 ### macOS Build
 - Must run natively on macOS (Apple restrictions)
@@ -113,12 +113,11 @@ Then log out and back in.
 The first build takes longer as Docker downloads images. Subsequent builds are faster.
 
 ### Windows build fails
-For Windows builds, the best approach is:
-1. Build on native Windows using `build-windows.bat`
-2. Use GitHub Actions for automated builds
-3. Build manually: `pip install pyinstaller && pyinstaller HistoQuiz.spec`
-
-Cross-compilation from Linux/macOS to Windows using Wine is complex and not recommended.
+The Wine-based Docker build can take some time on first run. If it fails:
+1. Ensure you have enough disk space (Wine images are large)
+2. Check Docker logs for specific errors
+3. Try building again - sometimes Wine initialization needs a retry
+4. As a fallback, you can build natively on Windows using `build-windows.bat`
 
 ### macOS build on non-macOS
 This is not supported due to Apple's license restrictions. Options:
@@ -148,15 +147,19 @@ If Make is not available:
 docker build -t histoquiz-builder .
 docker run --rm -v "$(pwd)/dist:/app/dist" histoquiz-builder pyinstaller --clean HistoQuiz.spec
 
+# Windows (with Docker - cross-platform)
+docker build -f Dockerfile.windows -t histoquiz-builder-windows .
+docker run --rm -v "$(pwd)/dist:/wine/drive_c/app/dist" histoquiz-builder-windows
+
 # Linux (without Docker)
 pip3 install -r requirements.txt pyinstaller
 pyinstaller --clean HistoQuiz.spec
 
-# Windows (Command Prompt)
+# Windows (without Docker, native only)
 pip install -r requirements.txt pyinstaller
 pyinstaller --clean HistoQuiz.spec
 
-# macOS (Terminal)
+# macOS (Terminal, native only)
 pip3 install -r requirements.txt pyinstaller
 pyinstaller --clean HistoQuiz.spec
 ```

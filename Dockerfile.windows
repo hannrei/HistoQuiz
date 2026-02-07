@@ -1,0 +1,15 @@
+# Windows build environment using Wine for cross-compilation
+# Based on a proven Wine + Python setup for PyInstaller
+FROM tobix/pywine:3.11
+
+WORKDIR /wine/drive_c/app
+
+# Copy application files
+COPY . .
+
+# Install dependencies
+RUN wine python -m pip install --upgrade pip && \
+    wine python -m pip install -r requirements.txt pyinstaller
+
+# Default command to build
+CMD ["wine", "python", "-m", "PyInstaller", "--clean", "HistoQuiz.spec"]
