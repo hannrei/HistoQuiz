@@ -233,6 +233,9 @@
             <div class="web-view">
                 <h2>Präparat Ansicht</h2>
                 <iframe id="webFrame" class="web-frame" src="about:blank"></iframe>
+                <div id="sourceLink" style="margin-top: 10px; padding: 10px; background: white; border-radius: 8px; word-break: break-all;">
+                    <strong>Quelle:</strong> <a id="sourceUrl" href="#" target="_blank" style="color: #667eea; text-decoration: none;"></a>
+                </div>
                 <button class="open-browser-btn" onclick="openInBrowser()">
                     🌐 Präparat im Browser öffnen
                 </button>
@@ -325,6 +328,11 @@
                 // Load preparation in iframe
                 const iframe = document.getElementById('webFrame');
                 iframe.src = currentSecret.link;
+                
+                // Update source link
+                const sourceUrl = document.getElementById('sourceUrl');
+                sourceUrl.href = currentSecret.link;
+                sourceUrl.textContent = currentSecret.link;
                 
                 setStatus('🧬 Neue Runde gestartet! Was ist dieses Präparat?', 'info');
             } catch (error) {
