@@ -10,6 +10,7 @@ import json
 import os
 import webbrowser
 import threading
+import time
 from urllib.parse import urlparse
 from src.Classes.PreparationRepository import PreparationRepository
 
@@ -99,7 +100,6 @@ class QuizHTTPHandler(http.server.SimpleHTTPRequestHandler):
 
 def open_browser(port, delay=1.5):
     """Open the default web browser after a short delay"""
-    import time
     time.sleep(delay)
     webbrowser.open(f'http://localhost:{port}')
 
