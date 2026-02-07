@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔬 Mikroskop-Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .score {
+            font-size: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .web-view {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f9f9f9;
+            min-height: 400px;
+        }
+        
+        .web-view h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .web-frame {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .open-browser-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .open-browser-btn:hover {
+            background: #5568d3;
+        }
+        
+        .selection-panel {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        
+        .selection-panel h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .prep-list {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            margin-bottom: 15px;
+        }
+        
+        .prep-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .prep-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .prep-item.selected {
+            background: #667eea;
+            color: white;
+        }
+        
+        .prep-item:last-child {
+            border-bottom: none;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            border-top: 2px solid #ddd;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background: #059669;
+        }
+        
+        .btn-new {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-new:hover {
+            background: #2563eb;
+        }
+        
+        .btn-quit {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-quit:hover {
+            background: #dc2626;
+        }
+        
+        .status-bar {
+            padding: 15px 20px;
+            background: #f3f4f6;
+            border-top: 2px solid #ddd;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .status-bar.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-bar.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-bar.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Mikroskop-Quiz 🔬</h1>
+            <div class="score" id="score">Score: 0/0</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="web-view">
+                <h2>Präparat Ansicht</h2>
+                <iframe id="webFrame" class="web-frame" src="about:blank"></iframe>
+                <button class="open-browser-btn" onclick="openInBrowser()">
+                    🌐 Präparat im Browser öffnen
+                </button>
+            </div>
+            
+            <div class="selection-panel">
+                <h2>Präparat auswählen</h2>
+                <input 
+                    type="text" 
+                    class="search-box" 
+                    id="searchBox" 
+                    placeholder="Suche nach Nummer oder Name..."
+                    oninput="filterPreparations()"
+                >
+                <div class="prep-list" id="prepList"></div>
+            </div>
+        </div>
+        
+        <div class="control-buttons">
+            <button class="btn btn-submit" onclick="submitAnswer()">✓ Antwort einreichen</button>
+            <button class="btn btn-new" onclick="newRound()">🔄 Neue Runde</button>
+            <button class="btn btn-quit" onclick="quit()">❌ Beenden</button>
+        </div>
+        
+        <div class="status-bar" id="statusBar">Bereit zum Spielen!</div>
+    </div>
+    
+    <script>
+        let preparations = [];
+        let currentSecret = null;
+        let score = 0;
+        let attempts = 0;
+        let selectedPrep = null;
+        
+        // Load preparations from server
+        async function loadPreparations() {
+            try {
+                const response = await fetch('/api/preparations');
+                preparations = await response.json();
+                displayPreparations(preparations);
+                newRound();
+            } catch (error) {
+                setStatus('Fehler beim Laden der Präparate!', 'error');
+            }
+        }
+        
+        function displayPreparations(preps) {
+            const prepList = document.getElementById('prepList');
+            prepList.innerHTML = '';
+            
+            preps.forEach(prep => {
+                const div = document.createElement('div');
+                div.className = 'prep-item';
+                div.textContent = `${prep.number}: ${prep.name}`;
+                div.onclick = () => selectPreparation(prep, div);
+                prepList.appendChild(div);
+            });
+        }
+        
+        function selectPreparation(prep, element) {
+            // Remove previous selection
+            document.querySelectorAll('.prep-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Add selection to clicked item
+            element.classList.add('selected');
+            selectedPrep = prep;
+        }
+        
+        function filterPreparations() {
+            const searchText = document.getElementById('searchBox').value.toLowerCase();
+            const filtered = preparations.filter(prep => 
+                prep.number.toLowerCase().includes(searchText) ||
+                prep.name.toLowerCase().includes(searchText)
+            );
+            displayPreparations(filtered);
+        }
+        
+        async function newRound() {
+            try {
+                const response = await fetch('/api/new_round');
+                currentSecret = await response.json();
+                
+                // Reset UI
+                document.getElementById('searchBox').value = '';
+                displayPreparations(preparations);
+                selectedPrep = null;
+                
+                // Load preparation in iframe
+                const iframe = document.getElementById('webFrame');
+                iframe.src = currentSecret.link;
+                
+                setStatus('🧬 Neue Runde gestartet! Was ist dieses Präparat?', 'info');
+            } catch (error) {
+                setStatus('Fehler beim Starten einer neuen Runde!', 'error');
+            }
+        }
+        
+        function openInBrowser() {
+            if (currentSecret) {
+                window.open(currentSecret.link, '_blank');
+                setStatus('Präparat im Browser geöffnet. Was ist es?', 'info');
+            }
+        }
+        
+        async function submitAnswer() {
+            if (!selectedPrep) {
+                setStatus('⚠️ Bitte wähle ein Präparat aus der Liste!', 'error');
+                return;
+            }
+            
+            if (!currentSecret) {
+                setStatus('⚠️ Keine aktive Runde!', 'error');
+                return;
+            }
+            
+            attempts++;
+            
+            if (selectedPrep.number === currentSecret.number) {
+                score++;
+                setStatus(`✅ RICHTIG! ${currentSecret.number}: ${currentSecret.name} 🎉`, 'success');
+                updateScore();
+                
+                // Automatically start new round after 2 seconds
+                setTimeout(() => {
+                    newRound();
+                }, 2000);
+            } else {
+                setStatus(`❌ Falsch! Es war ${currentSecret.number}: ${currentSecret.name}. Versuche es nochmal oder starte eine neue Runde!`, 'error');
+                updateScore();
+                
+                // Open the correct preparation in a new tab
+                window.open(currentSecret.link, '_blank');
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = `Score: ${score}/${attempts}`;
+        }
+        
+        function setStatus(message, type = '') {
+            const statusBar = document.getElementById('statusBar');
+            statusBar.textContent = message;
+            statusBar.className = 'status-bar';
+            if (type) {
+                statusBar.classList.add(type);
+            }
+        }
+        
+        function quit() {
+            setStatus('Quiz beendet. Vielen Dank! Du kannst dieses Fenster jetzt schließen.', 'info');
+            
+            // Disable all interactive elements
+            document.getElementById('searchBox').disabled = true;
+            document.getElementById('prepList').style.pointerEvents = 'none';
+            document.querySelectorAll('.btn').forEach(btn => btn.disabled = true);
+            document.querySelector('.open-browser-btn').disabled = true;
+        }
+        
+        // Initialize on page load
+        loadPreparations();
+    </script>
+</body>
+</html>
