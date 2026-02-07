@@ -12,7 +12,7 @@ class MicroscopeQuiz:
 
     def run(self) -> None:
         """Start the quiz"""
-        print(f"🔬 Mikroskop-Quiz geladen ({len(self.repo.preparations)} Präparate)")
+        print(f"🔬 HistoQuiz geladen ({len(self.repo.preparations)} Präparate)")
         print("Drücke Strg+C zum Beenden\n")
 
         try:
