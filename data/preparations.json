@@ -1,3 +1,32 @@
 [
-  {"number": "B9", "name": "Thymus", "id": "1074"}
+  {
+    "number": "A7",
+    "name": "Mesothel (Häutchenpräparat), einschichtiges Plattenepithel",
+    "id": "800"
+  },
+  {
+    "number": "A9",
+    "name": "Gallenblase, einschichtiges prismatisches Epithel",
+    "id": "805"
+  },
+  {
+    "number": "A14",
+    "name": "Cornea, mehrschichtiges unverhorntes und einschichtiges Plattenepithel",
+    "id": "827"
+  },
+  {
+    "number": "B70",
+    "name": "Nasenmuschel",
+    "id": "1276"
+  },
+  {
+    "number": "A16",
+    "name": "Fingerbeere, mehrschichtiges verhorntes Plattenepithel",
+    "id": "834"
+  },
+  {
+    "number": "B9",
+    "name": "Thymus vom Kind",
+    "id": "1074"
+  }
 ]
