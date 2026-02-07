@@ -12,10 +12,13 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
 
 ## Wie startest du das Programm?
 
-### 
-
 1. Lade das Projekt herunter (grüner "Code"-Button → "Download ZIP")
 2. Entpacke die ZIP-Datei
 3. a. In dem entpackten Ordner klicke doppelt auf RUN_WINDOWS.bat (Windows) oder RUN_UNIX.command (Mac/Linux)
 4. Wenn das nicht klappt, öffne ein Terminal/Kommandozeile in dem entpackten Ordner und führe `python3 main.py` aus.
 5. Der Browser öffnet sich automatisch mit dem Quiz!
+
+## Was wenn es Fehler im Programm gibt?
+
+Das Programm ist hauptsächlich gevibecodet und ich übernehme keine Haftung für die Korrektheit.
+Falls du einen Fehler entdeckt oder eine Frage hast, erstelle gerne ein (Issue)[https://github.com/hannrei/HistoQuiz/issues]
