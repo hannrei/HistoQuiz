@@ -37,8 +37,8 @@ linux:
 	fi
 	@echo "Python version: $$(python3 --version)"
 	@echo ""
-	@echo "Installing PyInstaller..."
-	@pip3 install pyinstaller>=6.0.0
+	@echo "Installing/upgrading PyInstaller..."
+	@pip3 install --upgrade pyinstaller>=6.0.0
 	@echo ""
 	@echo "Building executable..."
 	@pyinstaller --clean --noconfirm HistoQuiz.spec
@@ -64,8 +64,8 @@ macos:
 	fi
 	@echo "Python version: $$(python3 --version)"
 	@echo ""
-	@echo "Installing PyInstaller..."
-	@pip3 install pyinstaller>=6.0.0
+	@echo "Installing/upgrading PyInstaller..."
+	@pip3 install --upgrade pyinstaller>=6.0.0
 	@echo ""
 	@echo "Building executable..."
 	@pyinstaller --clean --noconfirm HistoQuiz.spec
@@ -88,8 +88,8 @@ windows:
 	@echo "If on Windows, use: build_windows.bat"
 	@echo ""
 	@if command -v python > /dev/null 2>&1; then \
-		echo "Installing PyInstaller..."; \
-		pip install pyinstaller>=6.0.0; \
+		echo "Installing/upgrading PyInstaller..."; \
+		pip install --upgrade pyinstaller>=6.0.0; \
 		echo ""; \
 		echo "Building executable..."; \
 		pyinstaller --clean --noconfirm HistoQuiz.spec; \
