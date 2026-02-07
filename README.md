@@ -27,6 +27,21 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
 
 Wenn du Python nicht installieren möchtest, kannst du eine standalone Executable erstellen:
 
+#### Methode A: Mit Docker (alle Plattformen auf einmal)
+
+Mit Docker kannst du Executables für Windows und Linux erstellen, ohne Python installieren zu müssen:
+
+1. Installiere [Docker Desktop](https://www.docker.com/get-started)
+2. Öffne ein Terminal im Projekt-Ordner
+3. Führe aus: `./build_all.sh`
+4. Die Executables findest du unter:
+   - Linux: `dist-docker/linux/HistoQuiz`
+   - Windows: `dist-docker/windows/HistoQuiz.exe`
+
+**Hinweis:** macOS Executables können aufgrund von Apple-Lizenzbeschränkungen nicht cross-kompiliert werden. Verwende auf macOS stattdessen Methode B.
+
+#### Methode B: Nativ auf deinem System
+
 **Windows:**
 1. Öffne die Kommandozeile im Projekt-Ordner
 2. Führe aus: `build_windows.bat`

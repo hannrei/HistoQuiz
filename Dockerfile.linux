@@ -1,0 +1,20 @@
+# Dockerfile for building HistoQuiz for Linux
+FROM python:3.11-slim
+
+# Install PyInstaller and dependencies
+RUN pip install --no-cache-dir pyinstaller>=6.0.0
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY . .
+
+# Build the application
+RUN pyinstaller --clean --noconfirm HistoQuiz.spec
+
+# Set executable permissions
+RUN chmod +x dist/HistoQuiz
+
+# The executable will be in /app/dist/HistoQuiz
+CMD ["echo", "Build completed. Executable is in /app/dist/HistoQuiz"]
