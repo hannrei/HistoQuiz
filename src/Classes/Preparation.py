@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from urllib.parse import quote
 
 
 @dataclass
@@ -11,7 +12,9 @@ class Preparation:
     @property
     def link(self) -> str:
         """Construct the full link from the ID"""
-        return f"https://histohal.uni-halle.de/histopatho/vimiview.php?id={self.id}&loc=hal&system=histo"
+        # URL encode the ID to prevent injection
+        safe_id = quote(self.id, safe='')
+        return f"https://histohal.uni-halle.de/histopatho/vimiview.php?id={safe_id}&loc=hal&system=histo"
 
     def matches_input(self, user_input: str) -> bool:
         """Check if input matches number or name"""
