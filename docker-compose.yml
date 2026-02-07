@@ -1,0 +1,27 @@
+services:
+  build-linux:
+    build:
+      context: .
+      dockerfile: Dockerfile.linux
+    image: histoquiz-builder-linux
+    volumes:
+      - ./dist-docker/linux:/output
+    command: /bin/bash -c "cp -r /app/dist/HistoQuiz /output/HistoQuiz && echo 'Linux build copied to dist-docker/linux/'"
+
+  build-windows:
+    build:
+      context: .
+      dockerfile: Dockerfile.windows
+    image: histoquiz-builder-windows
+    volumes:
+      - ./dist-docker/windows:/output
+    command: /bin/bash -c "cp -r /wine/drive_c/app/dist/HistoQuiz.exe /output/HistoQuiz.exe && echo 'Windows build copied to dist-docker/windows/'"
+
+  build-macos:
+    build:
+      context: .
+      dockerfile: Dockerfile.macos
+    image: histoquiz-builder-macos
+    volumes:
+      - ./dist-docker/macos:/output
+    command: /bin/bash -c "cp -r /app/dist/HistoQuiz /output/HistoQuiz && echo 'macOS build copied to dist-docker/macos/'"

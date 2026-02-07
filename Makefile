@@ -7,111 +7,98 @@ help:
 	@echo "========================================"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make linux    - Build for Linux"
-	@echo "  make macos    - Build for macOS"
-	@echo "  make windows  - Build for Windows"
-	@echo "  make all      - Build for current platform"
+	@echo "  make linux    - Build for Linux using Docker"
+	@echo "  make macos    - Build for macOS using Docker"
+	@echo "  make windows  - Build for Windows using Docker"
+	@echo "  make all      - Build for all platforms"
 	@echo "  make clean    - Clean build artifacts"
 	@echo ""
 	@echo "Requirements:"
-	@echo "  - Python 3.6 or higher"
-	@echo "  - pip (Python package manager)"
+	@echo "  - Docker"
+	@echo "  - docker-compose"
 	@echo ""
 
 # Clean build artifacts
 clean:
 	@echo "Cleaning build artifacts..."
-	@rm -rf build/ dist/ __pycache__/ src/__pycache__/ src/Classes/__pycache__/
+	@rm -rf build/ dist/ dist-docker/ __pycache__/ src/__pycache__/ src/Classes/__pycache__/
 	@echo "Clean complete."
 
-# Build for Linux
+# Build for Linux using Docker
 linux:
 	@echo "========================================"
 	@echo "Building HistoQuiz for Linux"
+	@echo "Using Docker for cross-compilation"
 	@echo "========================================"
 	@echo ""
-	@if ! command -v python3 > /dev/null 2>&1; then \
-		echo "ERROR: Python 3 is not installed"; \
-		echo "Please install Python 3 from your package manager or https://www.python.org/downloads/"; \
-		exit 1; \
-	fi
-	@echo "Python version: $$(python3 --version)"
-	@echo ""
-	@echo "Installing/upgrading PyInstaller..."
-	@pip3 install --upgrade pyinstaller>=6.0.0
-	@echo ""
-	@echo "Building executable..."
-	@pyinstaller --clean --noconfirm HistoQuiz.spec
-	@chmod +x dist/HistoQuiz
+	@mkdir -p dist-docker/linux
+	@docker-compose build build-linux
+	@docker-compose run --rm build-linux
 	@echo ""
 	@echo "========================================"
 	@echo "Build completed successfully!"
 	@echo "========================================"
 	@echo ""
-	@echo "The executable is located at: dist/HistoQuiz"
+	@echo "The executable is located at: dist-docker/linux/HistoQuiz"
 	@echo ""
 
-# Build for macOS
+# Build for macOS using Docker
 macos:
 	@echo "========================================"
 	@echo "Building HistoQuiz for macOS"
+	@echo "Using Docker for cross-compilation"
 	@echo "========================================"
 	@echo ""
-	@if ! command -v python3 > /dev/null 2>&1; then \
-		echo "ERROR: Python 3 is not installed"; \
-		echo "Please install Python 3 from https://www.python.org/downloads/"; \
-		exit 1; \
-	fi
-	@echo "Python version: $$(python3 --version)"
+	@echo "Note: True macOS cross-compilation has limitations."
+	@echo "This builds a Linux-compatible binary that may need testing on macOS."
 	@echo ""
-	@echo "Installing/upgrading PyInstaller..."
-	@pip3 install --upgrade pyinstaller>=6.0.0
-	@echo ""
-	@echo "Building executable..."
-	@pyinstaller --clean --noconfirm HistoQuiz.spec
-	@chmod +x dist/HistoQuiz
+	@mkdir -p dist-docker/macos
+	@docker-compose build build-macos
+	@docker-compose run --rm build-macos
 	@echo ""
 	@echo "========================================"
 	@echo "Build completed successfully!"
 	@echo "========================================"
 	@echo ""
-	@echo "The executable is located at: dist/HistoQuiz"
+	@echo "The executable is located at: dist-docker/macos/HistoQuiz"
 	@echo ""
 
-# Build for Windows (must be run on Windows with cmd.exe or PowerShell)
+# Build for Windows using Docker (cross-compilation with Wine)
 windows:
 	@echo "========================================"
 	@echo "Building HistoQuiz for Windows"
+	@echo "Using Docker with Wine for cross-compilation"
 	@echo "========================================"
 	@echo ""
-	@echo "Note: This target should be run on Windows"
-	@echo "If on Windows, use: build_windows.bat"
+	@mkdir -p dist-docker/windows
+	@docker-compose build build-windows
+	@docker-compose run --rm build-windows
 	@echo ""
-	@if command -v python > /dev/null 2>&1; then \
-		echo "Installing/upgrading PyInstaller..."; \
-		pip install --upgrade pyinstaller>=6.0.0; \
-		echo ""; \
-		echo "Building executable..."; \
-		pyinstaller --clean --noconfirm HistoQuiz.spec; \
-		echo ""; \
-		echo "========================================"; \
-		echo "Build completed successfully!"; \
-		echo "========================================"; \
-		echo ""; \
-		echo "The executable is located at: dist\\HistoQuiz.exe"; \
-	else \
-		echo "ERROR: Python is not installed or not in PATH"; \
-		echo "Please install Python from https://www.python.org/downloads/"; \
-		exit 1; \
-	fi
+	@echo "========================================"
+	@echo "Build completed successfully!"
+	@echo "========================================"
+	@echo ""
+	@echo "The executable is located at: dist-docker/windows/HistoQuiz.exe"
+	@echo ""
 
-# Build for current platform (auto-detect)
+# Build for all platforms
 all:
-	@if [ "$$(uname)" = "Darwin" ]; then \
-		$(MAKE) macos; \
-	elif [ "$$(uname)" = "Linux" ]; then \
-		$(MAKE) linux; \
-	else \
-		echo "Windows detected or unknown OS. Please use 'make windows' or 'build_windows.bat'"; \
-		exit 1; \
-	fi
+	@echo "========================================"
+	@echo "Building HistoQuiz for all platforms"
+	@echo "========================================"
+	@echo ""
+	@$(MAKE) linux
+	@echo ""
+	@$(MAKE) macos
+	@echo ""
+	@$(MAKE) windows
+	@echo ""
+	@echo "========================================"
+	@echo "All builds completed!"
+	@echo "========================================"
+	@echo ""
+	@echo "Executables are located in:"
+	@echo "  - Linux:   dist-docker/linux/HistoQuiz"
+	@echo "  - macOS:   dist-docker/macos/HistoQuiz"
+	@echo "  - Windows: dist-docker/windows/HistoQuiz.exe"
+	@echo ""
