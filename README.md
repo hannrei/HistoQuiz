@@ -14,9 +14,14 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
 
 1. Lade das Projekt herunter (grüner "Code"-Button → "Download ZIP")
 2. Entpacke die ZIP-Datei
-3. a. In dem entpackten Ordner klicke doppelt auf RUN_WINDOWS.bat (Windows) oder RUN_UNIX.command (Mac/Linux)
-4. Wenn das nicht klappt, öffne ein Terminal/Kommandozeile in dem entpackten Ordner und führe `python3 main.py` aus.
-5. Der Browser öffnet sich automatisch mit dem Quiz!
+3. In dem entpackten Ordner klicke doppelt auf **RUN_WINDOWS.bat** (Windows) oder **RUN_UNIX.command** (Mac/Linux)
+4. Falls das nicht funktioniert, musst du das Programm im Terminal starten. Öffne dazu ein Terminal/Kommandozeile und navigiere zum entpackten Ordner.
+5. Wie du dich im Windows Terminal bewegst, kannst du [hier](https://www.wikihow.com/Change-Directories-in-Command-Prompt) nachlesen. 
+6. Für MacOs kannst du direkt im Finder "Neues Terminal beim Ordner" auswählen ![](./data/images/macos_terminal.png)
+7. Falls du Linux nutzt, gehe ich davon aus, dass du weißt, wie man das Terminal benutzt.
+8. Führe im entpackten Ordner `python3 main.py` aus. 
+![Terminal Screenshot](./data/images/terminal_screenshot.png)
+7. Der Browser öffnet sich automatisch mit dem Quiz!
 
 ## Was wenn es Fehler im Programm gibt?
 
