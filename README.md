@@ -21,4 +21,4 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
 ## Was wenn es Fehler im Programm gibt?
 
 Das Programm ist hauptsächlich gevibecodet und ich übernehme keine Haftung für die Korrektheit.
-Falls du einen Fehler entdeckt oder eine Frage hast, erstelle gerne ein (Issue)[https://github.com/hannrei/HistoQuiz/issues]
+Falls du einen Fehler entdeckt oder eine Frage hast, erstelle gerne ein [Issue](https://github.com/hannrei/HistoQuiz/issues).
