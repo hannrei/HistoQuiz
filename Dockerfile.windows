@@ -14,4 +14,5 @@ COPY . .
 RUN wine pyinstaller --clean --noconfirm HistoQuiz.spec
 
 # The executable will be in /wine/drive_c/app/dist/HistoQuiz.exe
-CMD ["echo", "Build completed. Executable is in dist/HistoQuiz.exe"]
+# Note: When run via docker-compose, the file is copied to the mounted volume
+CMD ["echo", "Build completed. Executable ready."]
