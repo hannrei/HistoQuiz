@@ -1,10 +1,10 @@
-from PreparationRepository import PreparationRepository
-from QuizRound import QuizRound
+from .PreparationRepository import PreparationRepository
+from .QuizRound import QuizRound
 
 class MicroscopeQuiz:
     """Main quiz application"""
 
-    def __init__(self, repo_file: str = 'preparations.json'):
+    def __init__(self, repo_file: str = 'data/preparations.json'):
         self.repo: PreparationRepository = PreparationRepository(repo_file)
         if not self.repo.preparations:
             print("No preparations loaded. Please create preparations.json!")

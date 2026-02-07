@@ -1,7 +1,7 @@
 from typing import List, Optional
 import json
 import random
-import Preparation
+from .Preparation import Preparation
 
 
 class PreparationRepository:
