@@ -215,6 +215,28 @@
             color: #1e40af;
         }
         
+        .source-link-container {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            word-break: break-all;
+            display: none;
+        }
+        
+        .source-link-container.visible {
+            display: block;
+        }
+        
+        .source-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .source-link:hover {
+            text-decoration: underline;
+        }
+        
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -233,8 +255,8 @@
             <div class="web-view">
                 <h2>Präparat Ansicht</h2>
                 <iframe id="webFrame" class="web-frame" src="about:blank"></iframe>
-                <div id="sourceLink" style="margin-top: 10px; padding: 10px; background: white; border-radius: 8px; word-break: break-all;">
-                    <strong>Quelle:</strong> <a id="sourceUrl" href="#" target="_blank" rel="noopener noreferrer" aria-label="Quelle des mikroskopischen Präparats im neuen Tab öffnen" style="color: #667eea; text-decoration: none;"></a>
+                <div id="sourceLink" class="source-link-container">
+                    <strong>Quelle:</strong> <a id="sourceUrl" href="" target="_blank" rel="noopener noreferrer" aria-label="Quelle des mikroskopischen Präparats im neuen Tab öffnen" class="source-link"></a>
                 </div>
                 <button class="open-browser-btn" onclick="openInBrowser()">
                     🌐 Präparat im Browser öffnen
@@ -331,8 +353,10 @@
                 
                 // Update source link
                 const sourceUrl = document.getElementById('sourceUrl');
+                const sourceLink = document.getElementById('sourceLink');
                 sourceUrl.href = currentSecret.link;
                 sourceUrl.textContent = currentSecret.link;
+                sourceLink.classList.add('visible');
                 
                 setStatus('🧬 Neue Runde gestartet! Was ist dieses Präparat?', 'info');
             } catch (error) {
