@@ -158,7 +158,7 @@ If you want to add more microscope preparations to the quiz:
 
 **Note**: Each preparation needs three things:
 - `number`: The identification number
-- `name`: The name of the preparation  
+- `name`: The name of the preparation
 - `id`: The ID used to view it in the microscope browser
 
 ## Technical Information (for developers)
