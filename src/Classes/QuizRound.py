@@ -14,13 +14,13 @@ class QuizRound:
     def run(self) -> bool:
         """Execute quiz round"""
         if not self.secret:
-            print("No preparations available!")
+            print("Keine Präparate verfügbar!")
             return False
 
-        print(f"\n🧬 Round {random.randint(100, 999)} 🧬")
+        print(f"\n🧬 Runde {random.randint(100, 999)} 🧬")
         webbrowser.open(self.secret.link)
-        print("Examine the slide. What is it?")
-        print("Enter number (B14) or name (Lung). 'quit' to exit.\n")
+        print("Untersuche das Präparat. Was ist es?")
+        print("Gib die Nummer (B14) oder den Namen (Lunge) ein. 'quit' zum Beenden.\n")
 
         while True:
             user_input = input("> ").strip()
@@ -29,15 +29,15 @@ class QuizRound:
 
             candidates: List[Preparation] = self.repo.search(user_input)
             if not candidates:
-                print("❌ Not found. Try again!")
+                print("❌ Nicht gefunden. Versuche es nochmal!")
                 continue
 
             candidate: Preparation = candidates[0]  # First match
             if candidate.number == self.secret.number:
-                print("✅ CORRECT! Great job! 🎉")
+                print("✅ RICHTIG! Sehr gut! 🎉")
                 return True
             else:
-                print(f"❌ Wrong! It was {self.secret}")
+                print(f"❌ Falsch! Es war {self.secret}")
                 webbrowser.open(self.secret.link)
-                print("Opened for comparison. New guess?\n")
+                print("Zur Vergleichsansicht geöffnet. Neuer Versuch?\n")
                 continue

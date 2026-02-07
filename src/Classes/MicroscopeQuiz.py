@@ -7,13 +7,13 @@ class MicroscopeQuiz:
     def __init__(self, repo_file: str = 'data/preparations.json'):
         self.repo: PreparationRepository = PreparationRepository(repo_file)
         if not self.repo.preparations:
-            print("No preparations loaded. Please create preparations.json!")
+            print("Keine Präparate geladen. Bitte erstelle preparations.json!")
             return
 
     def run(self) -> None:
         """Start the quiz"""
-        print(f"🔬 Microscope Quiz loaded ({len(self.repo.preparations)} preparations)")
-        print("Press Ctrl+C to quit\n")
+        print(f"🔬 Mikroskop-Quiz geladen ({len(self.repo.preparations)} Präparate)")
+        print("Drücke Strg+C zum Beenden\n")
 
         try:
             while True:
@@ -21,10 +21,10 @@ class MicroscopeQuiz:
                 if not round_game.run():
                     break
 
-                again = input("\nNew round? (y/n): ").lower()
-                if again != 'y':
+                again = input("\nNeue Runde? (j/n): ").lower()
+                if again != 'j':
                     break
         except KeyboardInterrupt:
-            print("\n\nGoodbye! 👋")
+            print("\n\nAuf Wiedersehen! 👋")
 
-        print("Quiz finished. Thank you!")
+        print("Quiz beendet. Vielen Dank!")
