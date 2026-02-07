@@ -12,6 +12,8 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
 
 ## Wie startest du das Programm?
 
+### Option 1: Mit Python (empfohlen für Entwicklung)
+
 1. Lade das Projekt herunter (grüner "Code"-Button → "Download ZIP")
 2. Entpacke die ZIP-Datei
 3. Öffne ein Terminal/Kommandozeile im Projekt-Ordner
@@ -20,6 +22,24 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
    python3 main.py
    ```
 5. Der Browser öffnet sich automatisch mit dem Quiz!
+
+### Option 2: Mit kompilierter Executable (ohne Python Installation)
+
+Wenn du Python nicht installieren möchtest, kannst du eine standalone Executable erstellen:
+
+**Windows:**
+1. Öffne die Kommandozeile im Projekt-Ordner
+2. Führe aus: `build_windows.bat`
+3. Die Executable findest du dann unter `dist\HistoQuiz.exe`
+4. Starte `HistoQuiz.exe` direkt, ohne Python!
+
+**Linux/Mac:**
+1. Öffne ein Terminal im Projekt-Ordner
+2. Führe aus: `./build_unix.sh`
+3. Die Executable findest du dann unter `dist/HistoQuiz`
+4. Starte `./dist/HistoQuiz` direkt, ohne Python!
+
+**Hinweis:** Zum Kompilieren der Executable wird Python vorübergehend benötigt. Die fertige Executable läuft dann aber ohne Python Installation.
 
 ## Spielanleitung
 
