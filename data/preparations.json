@@ -131,8 +131,13 @@
   },
   {
     "number": "B31",
-    "name": "Pankreas",
+    "name": "Pankreas H.-E.",
     "id": "1181"
+  },
+  {
+    "number": "B31",
+    "name": "Pankreas, van Gieson-Färbung",
+    "id": "1187"
   },
   {
     "number": "B33",
