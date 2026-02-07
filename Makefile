@@ -79,7 +79,7 @@ build-macos:
 build-all:
 	@echo "Building for all available platforms..."
 	@$(MAKE) build-linux || echo "Linux build failed"
-	@$(MAKE) build-windows || echo "Windows build failed or unavailable"  
+	@$(MAKE) build-windows || echo "Windows build failed or unavailable"
 	@$(MAKE) build-macos || echo "macOS build failed or unavailable"
 	@echo ""
 	@echo "Build process complete. Check dist/ for built executables."
