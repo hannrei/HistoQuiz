@@ -1,0 +1,50 @@
+name: Build Cross-Platform Executables
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Linux executable
+        run: |
+          docker-compose build build-linux
+          docker-compose run --rm build-linux
+      
+      - name: Build Windows executable
+        run: |
+          docker-compose build build-windows
+          docker-compose run --rm build-windows
+      
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HistoQuiz-Linux
+          path: dist-docker/linux/HistoQuiz
+      
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HistoQuiz-Windows
+          path: dist-docker/windows/HistoQuiz.exe
+      
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist-docker/linux/HistoQuiz
+            dist-docker/windows/HistoQuiz.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
