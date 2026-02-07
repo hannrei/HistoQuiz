@@ -19,10 +19,10 @@ class PreparationRepository:
                 return [Preparation(p['number'], p['name'], p['id'])
                         for p in data]
         except FileNotFoundError:
-            print(f"Error: {self.filepath} not found!")
+            print(f"Fehler: {self.filepath} nicht gefunden!")
             return []
         except json.JSONDecodeError:
-            print(f"Error: Invalid JSON in {self.filepath}")
+            print(f"Fehler: Ungültiges JSON in {self.filepath}")
             return []
 
     def search(self, user_input: str) -> List[Preparation]:
