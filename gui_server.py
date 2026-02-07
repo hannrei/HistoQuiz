@@ -107,7 +107,8 @@ def run_gui_server(port=8000, repo_file='data/preparations.json'):
     QuizHTTPHandler.repo = repo
     
     # Change to the script directory to serve files correctly
-    os.chdir('/home/runner/work/HistoQuiz/HistoQuiz')
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(script_dir)
     
     # Create and start the server
     try:

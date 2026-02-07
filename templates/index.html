@@ -341,12 +341,12 @@
         
         async function submitAnswer() {
             if (!selectedPrep) {
-                alert('Bitte wähle ein Präparat aus der Liste!');
+                setStatus('⚠️ Bitte wähle ein Präparat aus der Liste!', 'error');
                 return;
             }
             
             if (!currentSecret) {
-                alert('Keine aktive Runde!');
+                setStatus('⚠️ Keine aktive Runde!', 'error');
                 return;
             }
             
@@ -357,18 +357,16 @@
                 setStatus(`✅ RICHTIG! ${currentSecret.number}: ${currentSecret.name} 🎉`, 'success');
                 updateScore();
                 
+                // Automatically start new round after 2 seconds
                 setTimeout(() => {
-                    alert(`✅ RICHTIG!\n\nEs war ${currentSecret.number}: ${currentSecret.name}\n\nSehr gut! 🎉`);
                     newRound();
-                }, 300);
+                }, 2000);
             } else {
-                setStatus(`❌ Falsch! Es war ${currentSecret.number}: ${currentSecret.name}`, 'error');
+                setStatus(`❌ Falsch! Es war ${currentSecret.number}: ${currentSecret.name}. Versuche es nochmal oder starte eine neue Runde!`, 'error');
                 updateScore();
                 
-                setTimeout(() => {
-                    alert(`❌ Falsch!\n\nEs war: ${currentSecret.number}: ${currentSecret.name}\n\nVersuche es nochmal oder starte eine neue Runde!`);
-                    window.open(currentSecret.link, '_blank');
-                }, 300);
+                // Open the correct preparation in a new tab
+                window.open(currentSecret.link, '_blank');
             }
         }
         
@@ -386,12 +384,13 @@
         }
         
         function quit() {
-            if (confirm('Möchtest du das Quiz wirklich beenden?')) {
-                setStatus('Quiz beendet. Vielen Dank!', 'info');
-                setTimeout(() => {
-                    window.close();
-                }, 1000);
-            }
+            setStatus('Quiz beendet. Vielen Dank! Du kannst dieses Fenster jetzt schließen.', 'info');
+            
+            // Disable all interactive elements
+            document.getElementById('searchBox').disabled = true;
+            document.getElementById('prepList').style.pointerEvents = 'none';
+            document.querySelectorAll('.btn').forEach(btn => btn.disabled = true);
+            document.querySelector('.open-browser-btn').disabled = true;
         }
         
         // Initialize on page load
