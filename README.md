@@ -29,17 +29,25 @@ Wenn du Python nicht installieren möchtest, kannst du eine standalone Executabl
 
 **Windows:**
 1. Öffne die Kommandozeile im Projekt-Ordner
-2. Führe aus: `build_windows.bat`
+2. Führe aus: `build-windows.bat`
 3. Die Executable findest du dann unter `dist\HistoQuiz.exe`
 4. Starte `HistoQuiz.exe` direkt, ohne Python!
 
-**Linux/Mac:**
+**Linux:**
 1. Öffne ein Terminal im Projekt-Ordner
-2. Führe aus: `./build_unix.sh`
+2. Führe aus: `./build-linux.sh` oder `make build-linux`
 3. Die Executable findest du dann unter `dist/HistoQuiz`
 4. Starte `./dist/HistoQuiz` direkt, ohne Python!
 
-**Hinweis:** Zum Kompilieren der Executable wird Python vorübergehend benötigt. Die fertige Executable läuft dann aber ohne Python Installation.
+**macOS:**
+1. Öffne ein Terminal im Projekt-Ordner
+2. Führe aus: `./build-macos.sh` oder `make build-macos`
+3. Die Executable findest du dann unter `dist/HistoQuiz`
+4. Starte `./dist/HistoQuiz` direkt, ohne Python!
+
+**Hinweis:** Zum Kompilieren der Executable wird Python oder Docker vorübergehend benötigt. Die fertige Executable läuft dann aber ohne Python Installation.
+
+**Für Entwickler:** Siehe [BUILD.md](BUILD.md) für detaillierte Build-Anweisungen und Docker-basierte Cross-Compilation.
 
 ## Spielanleitung
 

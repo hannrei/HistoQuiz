@@ -40,19 +40,40 @@ Note: macOS build will fail if not run on macOS.
 - Uses Docker with Python 3.11 base image
 - Runs PyInstaller inside container
 - Outputs Linux ELF executable
-- **Works from any host OS**
+- **Works from any host OS via Docker**
 
 ### Windows Build
-- Uses Docker with Wine (Windows emulator)
-- Runs Python and PyInstaller through Wine
+- **Recommended:** Build natively on Windows using `build-windows.bat` or `make build-windows`
+- Uses local Python installation and PyInstaller
 - Outputs Windows PE executable (.exe)
-- **Works from any host OS**
+- Can also be built via GitHub Actions for CI/CD
 
 ### macOS Build
 - Must run natively on macOS (Apple restrictions)
 - Uses local PyInstaller installation
 - Outputs macOS Mach-O executable
 - **Only works on macOS hosts**
+
+## Quick Start Commands
+
+### Simple Build Scripts (No Make Required)
+
+**Windows:**
+```cmd
+build-windows.bat
+```
+
+**Linux:**
+```bash
+./build-linux.sh
+```
+
+**macOS:**
+```bash
+./build-macos.sh
+```
+
+These scripts automatically detect and use Docker when available (Linux), or fall back to local Python installation.
 
 ## Platform-Specific Notes
 
@@ -92,10 +113,12 @@ Then log out and back in.
 The first build takes longer as Docker downloads images. Subsequent builds are faster.
 
 ### Windows build fails
-The Wine-based build can be complex. If it fails:
-1. Try building on native Windows
+For Windows builds, the best approach is:
+1. Build on native Windows using `build-windows.bat`
 2. Use GitHub Actions for automated builds
-3. Check Docker logs: `docker logs <container-id>`
+3. Build manually: `pip install pyinstaller && pyinstaller HistoQuiz.spec`
+
+Cross-compilation from Linux/macOS to Windows using Wine is complex and not recommended.
 
 ### macOS build on non-macOS
 This is not supported due to Apple's license restrictions. Options:
@@ -121,17 +144,21 @@ make docker-shell
 ### Manual Build
 If Make is not available:
 ```bash
-# Linux
+# Linux (with Docker - recommended)
 docker build -t histoquiz-builder .
-docker run --rm -v "$(pwd)/dist:/app/dist" histoquiz-builder pyinstaller --clean --onefile HistoQuiz.spec
+docker run --rm -v "$(pwd)/dist:/app/dist" histoquiz-builder pyinstaller --clean HistoQuiz.spec
 
-# Windows
-docker build -f Dockerfile.windows -t histoquiz-builder-windows .
-docker run --rm -v "$(pwd)/dist:/app/dist" histoquiz-builder-windows
+# Linux (without Docker)
+pip3 install -r requirements.txt pyinstaller
+pyinstaller --clean HistoQuiz.spec
 
-# macOS (native only)
+# Windows (Command Prompt)
 pip install -r requirements.txt pyinstaller
-pyinstaller --clean --onefile HistoQuiz.spec
+pyinstaller --clean HistoQuiz.spec
+
+# macOS (Terminal)
+pip3 install -r requirements.txt pyinstaller
+pyinstaller --clean HistoQuiz.spec
 ```
 
 ## CI/CD Integration
