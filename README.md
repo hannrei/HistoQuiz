@@ -9,11 +9,10 @@ Alle Bilder stammen vom Onlinemikskop der Martin-Luther-Universität Halle-Witte
 
 - **Python 3.6 oder höher** - kostenlos unter [python.org/downloads](https://www.python.org/downloads/)
   - **Windows**: Bei der Installation "Add Python to PATH" ankreuzen!
-  - **Mac/Linux**: Meist schon installiert
 
 ## Wie startest du das Programm?
 
-1. Lade das Projekt herunter (blauer "Code"-Button oben rechts → "Download ZIP")
+1. Lade das Projekt herunter (blauer oder grüner "Code"-Button oben rechts → "Download ZIP")
 2. Entpacke die ZIP-Datei
 3. Unter Windows kannst du im entpackten Ordner doppelt auf **RUN_WINDOWS.bat** klicken.
 4. Falls das nicht funktioniert oder du einen Mac oder Linux hast, musst du das Programm im Terminal starten. Öffne dazu ein Terminal/Kommandozeile und navigiere zum entpackten Ordner.
