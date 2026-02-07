@@ -1,2 +1,1 @@
-# Build dependencies for creating standalone executables
-pyinstaller>=6.0.0
+# PyInstaller already installed in image

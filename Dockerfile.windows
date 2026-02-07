@@ -1,16 +1,35 @@
 # Windows build environment using Wine for cross-compilation
-# Uses cdrx/pyinstaller-windows image (Python 3.6 with PyInstaller 5.x)
+# Uses cdrx/pyinstaller-windows image (Python 3.7 with PyInstaller 3.6)
 FROM cdrx/pyinstaller-windows
 
 WORKDIR /src
 
-# Copy application files
-COPY . .
+# Create a build script that handles requirements.txt and spec file compatibility
+RUN echo '#!/bin/bash' > /build.sh && \
+    echo 'set -e' >> /build.sh && \
+    echo 'cd /src' >> /build.sh && \
+    echo '# Backup original requirements.txt if it exists' >> /build.sh && \
+    echo 'if [ -f requirements.txt ]; then' >> /build.sh && \
+    echo '  mv requirements.txt requirements.txt.bak' >> /build.sh && \
+    echo 'fi' >> /build.sh && \
+    echo '# Create empty requirements for build' >> /build.sh && \
+    echo 'echo "# PyInstaller already installed in image" > requirements.txt' >> /build.sh && \
+    echo '# Remove hooksconfig from spec file for PyInstaller 3.6 compatibility' >> /build.sh && \
+    echo 'if [ -f HistoQuiz.spec ]; then' >> /build.sh && \
+    echo '  cp HistoQuiz.spec HistoQuiz.spec.bak' >> /build.sh && \
+    echo '  sed -i "/hooksconfig=/d" HistoQuiz.spec' >> /build.sh && \
+    echo 'fi' >> /build.sh && \
+    echo '# Run pyinstaller' >> /build.sh && \
+    echo 'pyinstaller --clean HistoQuiz.spec' >> /build.sh && \
+    echo '# Restore original files' >> /build.sh && \
+    echo 'if [ -f requirements.txt.bak ]; then' >> /build.sh && \
+    echo '  mv requirements.txt.bak requirements.txt' >> /build.sh && \
+    echo 'fi' >> /build.sh && \
+    echo 'if [ -f HistoQuiz.spec.bak ]; then' >> /build.sh && \
+    echo '  mv HistoQuiz.spec.bak HistoQuiz.spec' >> /build.sh && \
+    echo 'fi' >> /build.sh && \
+    chmod +x /build.sh
 
-# The cdrx image has PyInstaller pre-installed
-# Create empty requirements.txt to avoid version conflicts during build
-RUN echo "# Build-time placeholder - PyInstaller already installed" > requirements.txt
-
-# Entry point runs pyinstaller
-CMD ["--clean", "HistoQuiz.spec"]
+# Entry point runs the build script
+ENTRYPOINT ["/build.sh"]
 
