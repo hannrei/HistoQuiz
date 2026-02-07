@@ -108,8 +108,15 @@ HistoQuiz/
 4. **Clean environment**: No conflicts with local Python installations
 5. **Easy CI/CD**: Can be easily integrated into GitHub Actions or other CI systems
 
+## CI/CD Integration
+
+GitHub Actions workflow (`.github/workflows/build-executables.yml`) is configured to:
+- Automatically build executables when version tags (e.g., `v1.0.0`) are pushed
+- Create GitHub releases with attached executables
+- Allow manual workflow triggers
+
 ## Future Improvements
 
 - Add automated testing of built executables
-- Integrate with GitHub Actions for automatic releases
 - Add support for ARM architectures (e.g., Apple Silicon, Raspberry Pi)
+- Add checksums/signatures for security verification
