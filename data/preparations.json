@@ -1,27 +1,3 @@
 [
-  {
-    "number": "B01",
-    "name": "Lung",
-    "link": "https://example.com/slides/lung"
-  },
-  {
-    "number": "B02",
-    "name": "Liver",
-    "link": "https://example.com/slides/liver"
-  },
-  {
-    "number": "B03",
-    "name": "Kidney",
-    "link": "https://example.com/slides/kidney"
-  },
-  {
-    "number": "B04",
-    "name": "Heart",
-    "link": "https://example.com/slides/heart"
-  },
-  {
-    "number": "B05",
-    "name": "Brain",
-    "link": "https://example.com/slides/brain"
-  }
+  {"number": "B9", "name": "Thymus", "link": "https://histohal.uni-halle.de/histopatho/vimiview.php?id=1074&loc=hal&system=histo"}
 ]
