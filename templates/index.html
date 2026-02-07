@@ -76,23 +76,6 @@
             background: white;
         }
         
-        .open-browser-btn {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .open-browser-btn:hover {
-            background: #5568d3;
-        }
-        
         .selection-panel {
             border: 2px solid #ddd;
             border-radius: 10px;
@@ -259,9 +242,6 @@
                 <div id="sourceLink" class="source-link-container">
                     <strong>Quelle:</strong> <a id="sourceUrl" href="" target="_blank" rel="noopener noreferrer" aria-label="Quelle des mikroskopischen Präparats in neuem Tab öffnen" class="source-link"></a>
                 </div>
-                <button class="open-browser-btn" onclick="openInBrowser()">
-                    🌐 Präparat im Browser öffnen
-                </button>
             </div>
             
             <div class="selection-panel">
@@ -365,13 +345,6 @@
             }
         }
         
-        function openInBrowser() {
-            if (currentSecret) {
-                window.open(currentSecret.link, '_blank');
-                setStatus('Präparat im Browser geöffnet. Was ist es?', 'info');
-            }
-        }
-        
         async function submitAnswer() {
             if (!selectedPrep) {
                 setStatus('⚠️ Bitte wähle ein Präparat aus der Liste!', 'error');
@@ -420,7 +393,6 @@
             document.getElementById('searchBox').disabled = true;
             document.getElementById('prepList').style.pointerEvents = 'none';
             document.querySelectorAll('.btn').forEach(btn => btn.disabled = true);
-            document.querySelector('.open-browser-btn').disabled = true;
         }
         
         // Initialize on page load
