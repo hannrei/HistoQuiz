@@ -70,27 +70,10 @@
         
         .web-frame {
             width: 100%;
-            height: 500px;
+            height: 600px;
             border: 1px solid #ccc;
             border-radius: 8px;
             background: white;
-        }
-        
-        .open-browser-btn {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .open-browser-btn:hover {
-            background: #5568d3;
         }
         
         .selection-panel {
@@ -215,6 +198,29 @@
             color: #1e40af;
         }
         
+        .source-link-container {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: none;
+        }
+        
+        .source-link-container.visible {
+            display: block;
+        }
+        
+        .source-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .source-link:hover {
+            text-decoration: underline;
+        }
+        
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -233,9 +239,9 @@
             <div class="web-view">
                 <h2>Präparat Ansicht</h2>
                 <iframe id="webFrame" class="web-frame" src="about:blank"></iframe>
-                <button class="open-browser-btn" onclick="openInBrowser()">
-                    🌐 Präparat im Browser öffnen
-                </button>
+                <div id="sourceLink" class="source-link-container">
+                    <strong>Quelle:</strong> <a id="sourceUrl" href="" target="_blank" rel="noopener noreferrer" aria-label="Quelle des mikroskopischen Präparats in neuem Tab öffnen" class="source-link"></a>
+                </div>
             </div>
             
             <div class="selection-panel">
@@ -326,16 +332,16 @@
                 const iframe = document.getElementById('webFrame');
                 iframe.src = currentSecret.link;
                 
+                // Update source link
+                const sourceUrl = document.getElementById('sourceUrl');
+                const sourceLink = document.getElementById('sourceLink');
+                sourceUrl.href = currentSecret.link;
+                sourceUrl.textContent = currentSecret.link;
+                sourceLink.classList.add('visible');
+                
                 setStatus('🧬 Neue Runde gestartet! Was ist dieses Präparat?', 'info');
             } catch (error) {
                 setStatus('Fehler beim Starten einer neuen Runde!', 'error');
-            }
-        }
-        
-        function openInBrowser() {
-            if (currentSecret) {
-                window.open(currentSecret.link, '_blank');
-                setStatus('Präparat im Browser geöffnet. Was ist es?', 'info');
             }
         }
         
@@ -387,7 +393,6 @@
             document.getElementById('searchBox').disabled = true;
             document.getElementById('prepList').style.pointerEvents = 'none';
             document.querySelectorAll('.btn').forEach(btn => btn.disabled = true);
-            document.querySelector('.open-browser-btn').disabled = true;
         }
         
         // Initialize on page load
