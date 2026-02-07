@@ -16,7 +16,7 @@ class PreparationRepository:
         try:
             with open(self.filepath, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                return [Preparation(p['number'], p['name'], p['link'])
+                return [Preparation(p['number'], p['name'], p['id'])
                         for p in data]
         except FileNotFoundError:
             print(f"Error: {self.filepath} not found!")
