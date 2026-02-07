@@ -1,6 +1,7 @@
 # HistoQuiz 🔬
 
 Ein interaktives Quiz zum Lernen der histologischen Präparate für die mikroskopische Anatomie Prüfung für Studierende der Medizinischen Physik und Ernährungswissenschaften.
+Alle Bilder stammen vom Onlinemikskop der Martin-Luther-Universität Halle-Wittenberg [Histo-Online](https://histohal.uni-halle.de/).
 
 ![Screenshot](./data/images/screenshot.png)
 
