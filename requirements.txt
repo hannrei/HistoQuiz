@@ -1,2 +1,0 @@
-# Build dependencies for creating standalone executables
-pyinstaller>=6.0.0
