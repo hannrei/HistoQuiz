@@ -39,7 +39,7 @@ if __name__ == "__main__":
     # Create and start the server
     try:
         with socketserver.TCPServer(("", port), QuizHTTPHandler) as httpd:
-            print(f"🔬 Mikroskop-Quiz gestartet!")
+            print(f"🔬 HistoQuiz gestartet!")
             print(f"📚 {len(repo.preparations)} Präparate geladen")
             print(f"🌐 Browser wird geöffnet...")
             print(f"\n🛑 Drücke Strg+C zum Beenden\n")

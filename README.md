@@ -1,6 +1,8 @@
 # HistoQuiz 🔬
 
-Ein interaktives Quiz zum Lernen histologischer Präparate.
+Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikroskopische Anatomie Prüfung für Studierende der Medizinischen Physik und Ernährungswissenschaften.
+
+![Screenshot](./data/images/screenshot.png)
 
 ## Was brauchst du?
 
