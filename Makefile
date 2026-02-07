@@ -8,14 +8,14 @@ help:
 	@echo ""
 	@echo "Available targets:"
 	@echo "  make linux    - Build for Linux using Docker"
-	@echo "  make macos    - Build for macOS using Docker"
 	@echo "  make windows  - Build for Windows using Docker"
-	@echo "  make all      - Build for all platforms"
+	@echo "  make macos    - Build for macOS (native only - use build_unix.sh)"
+	@echo "  make all      - Build for Linux and Windows"
 	@echo "  make clean    - Clean build artifacts"
 	@echo ""
 	@echo "Requirements:"
-	@echo "  - Docker"
-	@echo "  - docker-compose"
+	@echo "  - Docker and docker-compose for Linux/Windows builds"
+	@echo "  - macOS builds must be done natively (cannot cross-compile)"
 	@echo ""
 
 # Clean build artifacts
@@ -42,26 +42,20 @@ linux:
 	@echo "The executable is located at: dist-docker/linux/HistoQuiz"
 	@echo ""
 
-# Build for macOS using Docker
+# Build for macOS - must be done natively
 macos:
 	@echo "========================================"
 	@echo "Building HistoQuiz for macOS"
-	@echo "Using Docker for cross-compilation"
 	@echo "========================================"
 	@echo ""
-	@echo "Note: True macOS cross-compilation has limitations."
-	@echo "This builds a Linux-compatible binary that may need testing on macOS."
+	@echo "ERROR: macOS executables cannot be cross-compiled."
+	@echo "Please run this build on a macOS machine using:"
+	@echo "  ./build_unix.sh"
 	@echo ""
-	@mkdir -p dist-docker/macos
-	@docker-compose build build-macos
-	@docker-compose run --rm build-macos
+	@echo "PyInstaller does not support cross-compilation to macOS"
+	@echo "due to Apple's restrictions and code signing requirements."
 	@echo ""
-	@echo "========================================"
-	@echo "Build completed successfully!"
-	@echo "========================================"
-	@echo ""
-	@echo "The executable is located at: dist-docker/macos/HistoQuiz"
-	@echo ""
+	@false
 
 # Build for Windows using Docker (cross-compilation with Wine)
 windows:
@@ -81,7 +75,7 @@ windows:
 	@echo "The executable is located at: dist-docker/windows/HistoQuiz.exe"
 	@echo ""
 
-# Build for all platforms
+# Build for all supported platforms via Docker
 all:
 	@echo "========================================"
 	@echo "Building HistoQuiz for all platforms"
@@ -89,16 +83,15 @@ all:
 	@echo ""
 	@$(MAKE) linux
 	@echo ""
-	@$(MAKE) macos
-	@echo ""
 	@$(MAKE) windows
 	@echo ""
 	@echo "========================================"
-	@echo "All builds completed!"
+	@echo "All Docker builds completed!"
 	@echo "========================================"
 	@echo ""
 	@echo "Executables are located in:"
 	@echo "  - Linux:   dist-docker/linux/HistoQuiz"
-	@echo "  - macOS:   dist-docker/macos/HistoQuiz"
 	@echo "  - Windows: dist-docker/windows/HistoQuiz.exe"
+	@echo ""
+	@echo "Note: For macOS, run ./build_unix.sh on a Mac"
 	@echo ""
