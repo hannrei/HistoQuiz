@@ -364,9 +364,6 @@
             } else {
                 setStatus(`❌ Falsch! Es war ${currentSecret.number}: ${currentSecret.name}. Versuche es nochmal oder starte eine neue Runde!`, 'error');
                 updateScore();
-                
-                // Open the correct preparation in a new tab
-                window.open(currentSecret.link, '_blank');
             }
         }
         

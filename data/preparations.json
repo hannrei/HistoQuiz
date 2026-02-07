@@ -1,8 +1,128 @@
 [
   {
-    "number": "A7",
-    "name": "Mesothel (Häutchenpräparat), einschichtiges Plattenepithel",
-    "id": "800"
+    "number": "B1 A",
+    "name": "Gefäß-Nerven-Bündel",
+    "id": "1680"
+  },
+  {
+    "number": "B2",
+    "name": "Aorta",
+    "id": "1049"
+  },
+  {
+    "number": "B4",
+    "name": "Vena cava",
+    "id": "1057"
+  },
+  {
+    "number": "B9",
+    "name": "Thymus vom Kind",
+    "id": "1074"
+  },
+  {
+    "number": "B7",
+    "name": "Tonsilla palatina",
+    "id": "1069"
+  },
+  {
+    "number": "B8",
+    "name": "Milz",
+    "id": "1065"
+  },
+  {
+    "number": "A50",
+    "name": "Milz, durchgespült",
+    "id": "1011"
+  },
+  {
+    "number": "B5",
+    "name": "Lymphknoten",
+    "id": "1061"
+  },
+  {
+    "number": "B71",
+    "name": "Nasenflügel",
+    "id": "1280"
+  },
+  {
+    "number": "B70",
+    "name": "Nasenmuschel",
+    "id": "1277"
+  },
+  {
+    "number": "B67",
+    "name": "Epiglottis",
+    "id": "1269"
+  },
+  {
+    "number": "B12",
+    "name": "Trachea (längs)",
+    "id": "1463"
+  },
+  {
+    "number": "B14",
+    "name": "Lunge, adult",
+    "id": "1454"
+  },
+  {
+    "number": "B59",
+    "name": "Zahn (geschnitten, quer)",
+    "id": "1237"
+  },
+  {
+    "number": "C11",
+    "name": "Zunge, Papillae foliatae, Kaninchen",
+    "id": "1341"
+  },
+  {
+    "number": "A18",
+    "name": "Glandula submandibularis",
+    "id": "968"
+  },
+  {
+    "number": "B65",
+    "name": "Glandula sublingualis",
+    "id": "1445"
+  },
+  {
+    "number": "B18",
+    "name": "Ösophagus (quer)",
+    "id": "1108"
+  },
+  {
+    "number": "B20",
+    "name": "Magen, Corpus",
+    "id": "1118"
+  },
+  {
+    "number": "B22",
+    "name": "Duodenum (mit Pylorus)",
+    "id": "1123"
+  },
+  {
+    "number": "C28",
+    "name": "Duodenum",
+    "id": "1428"
+  },
+  {
+    "number": "B24",
+    "name": "Jejunum (längs)",
+    "id": "1449"
+  },
+  {
+    "number": "B25",
+    "name": "Ileum (längs und quer)",
+    "id": "1205"
+  },
+  {
+    "number": "B29",
+    "name": "Leber, Schwein",
+    "id": "1143"
+  },
+  {
+    "number": "B30",
+    "name": "Leber, Mensch",
+    "id": "1149"
   },
   {
     "number": "A9",
@@ -10,23 +130,118 @@
     "id": "805"
   },
   {
-    "number": "A14",
-    "name": "Cornea, mehrschichtiges unverhorntes und einschichtiges Plattenepithel",
-    "id": "827"
+    "number": "B31",
+    "name": "Pankreas",
+    "id": "1181"
   },
   {
-    "number": "B70",
-    "name": "Nasenmuschel",
-    "id": "1276"
+    "number": "B33",
+    "name": "Niere, adult",
+    "id": "1192"
+  },
+  {
+    "number": "B34",
+    "name": "Nierenpapille",
+    "id": "1159"
+  },
+  {
+    "number": "B35",
+    "name": "Ureter (ungedehnt)",
+    "id": "1163"
+  },
+  {
+    "number": "B36",
+    "name": "Harnblase",
+    "id": "1167"
   },
   {
     "number": "A16",
-    "name": "Fingerbeere, mehrschichtiges verhorntes Plattenepithel",
+    "name": "Fingerbeere H.-E.",
     "id": "834"
   },
   {
-    "number": "B9",
-    "name": "Thymus vom Kind",
-    "id": "1074"
+    "number": "A16",
+    "name": "Fingerbeere, Eisenhämatoxilin",
+    "id": "838"
+  },
+  {
+    "number": "A17",
+    "name": "Haut, Axilla",
+    "id": "977"
+  },
+  {
+    "number": "B15",
+    "name": "Glandula pituitaria (Hypophyse)",
+    "id": "1089"
+  },
+  {
+    "number": "A60",
+    "name": "Pankreas, Insulin",
+    "id": "1023"
+  },
+  {
+    "number": "A61",
+    "name": "Pankreas, Glukagon",
+    "id": "1026"
+  },
+  {
+    "number": "A8",
+    "name": "Glandula thyreoidea (Schilddrüse)",
+    "id": "1487"
+  },
+  {
+    "number": "B17",
+    "name": "Glandula suprarenalis (Nebenniere)",
+    "id": "1098"
+  },
+  {
+    "number": "B46",
+    "name": "Ovar, Kaninchen",
+    "id": "1503"
+  },
+  {
+    "number": "B48",
+    "name": "Ovar, Corpus luteum",
+    "id": "1509"
+  },
+  {
+    "number": "B50",
+    "name": "Uterus, Proliferationsphase",
+    "id": "1521"
+  },
+  {
+    "number": "B51",
+    "name": "Uterus, Sekretionsphase",
+    "id": "1518"
+  },
+  {
+    "number": "C2",
+    "name": "Mamma, laktierend, mit Papille",
+    "id": "1306"
+  },
+  {
+    "number": "B39",
+    "name": "Testis (Hoden)",
+    "id": "1170"
+  },
+  {
+    "number": "B40",
+    "name": "Epididymis (Nebenhoden)",
+    "id": "1489"
+  },
+  {
+    "number": "B42",
+    "name": "Ductus deferens, Eisenhämatoxilin",
+    "id": "1697"
+  },
+  {
+    "number": "B42",
+    "name": "Ductus deferens, H.-E.",
+    "id": "1174"
+  },
+  {
+    "number": "B43",
+    "name": "Prostata (Vorsteherdrüse)",
+    "id": "1493"
   }
 ]
