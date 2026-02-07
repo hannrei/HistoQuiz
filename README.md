@@ -1,6 +1,6 @@
 # HistoQuiz 🔬
 
-Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikroskopische Anatomie Prüfung für Studierende der Medizinischen Physik und Ernährungswissenschaften.
+Ein interaktives Quiz zum Lernen der histologischen Präparate für die mikroskopische Anatomie Prüfung für Studierende der Medizinischen Physik und Ernährungswissenschaften.
 
 ![Screenshot](./data/images/screenshot.png)
 
@@ -12,18 +12,18 @@ Ein interaktives Quiz zum Lernen der histologischer Präparate für die mikrosko
 
 ## Wie startest du das Programm?
 
-1. Lade das Projekt herunter (grüner "Code"-Button → "Download ZIP")
+1. Lade das Projekt herunter (blauer "Code"-Button oben rechts → "Download ZIP")
 2. Entpacke die ZIP-Datei
 3. In dem entpackten Ordner klicke doppelt auf **RUN_WINDOWS.bat** (Windows) oder **RUN_UNIX.command** (Mac/Linux)
 4. Falls das nicht funktioniert, musst du das Programm im Terminal starten. Öffne dazu ein Terminal/Kommandozeile und navigiere zum entpackten Ordner.
-5. Wie du dich im Windows Terminal bewegst, kannst du [hier](https://www.wikihow.com/Change-Directories-in-Command-Prompt) nachlesen. 
-6. Für MacOs kannst du direkt im Finder "Neues Terminal beim Ordner" auswählen ![](./data/images/macos_terminal.png)
-7. Falls du Linux nutzt, gehe ich davon aus, dass du weißt, wie man das Terminal benutzt.
+5. Wie du dich im **Windows** Terminal bewegst, kannst du [hier](https://www.wikihow.com/Change-Directories-in-Command-Prompt) nachlesen. 
+6. Für **MacOs** kannst du direkt im Finder "Neues Terminal beim Ordner" auswählen ![](./data/images/macos_terminal.png)
+7. Falls du **Linux** nutzt, gehe ich davon aus, dass du weißt, wie man das Terminal benutzt.
 8. Führe im entpackten Ordner `python3 main.py` aus. 
 ![Terminal Screenshot](./data/images/terminal_screenshot.png)
 7. Der Browser öffnet sich automatisch mit dem Quiz!
 
-## Was wenn es Fehler im Programm gibt?
+## Was, wenn es Fehler im Programm gibt?
 
-Das Programm ist hauptsächlich gevibecodet und ich übernehme keine Haftung für die Korrektheit.
+Das Programm ist durch den Einsatz von Vibecoding entstanden und ich übernehme keine Haftung für die Richtigkeit der Zuordnung zwischen Bild und Präparat.
 Falls du einen Fehler entdeckt oder eine Frage hast, erstelle gerne ein [Issue](https://github.com/hannrei/HistoQuiz/issues).
