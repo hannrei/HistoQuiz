@@ -89,7 +89,7 @@ class QuizHTTPHandler(http.server.SimpleHTTPRequestHandler):
     def reset_history(self):
         """Reset the preparation history for a new game session"""
         if not self.repo:
-            return {'status': 'error', 'message': 'No repository available'}
+            return {'status': 'error', 'message': 'Repository not initialized. Please restart the server.'}
         
         self.repo.reset_history()
         return {'status': 'success', 'message': 'History reset'}
