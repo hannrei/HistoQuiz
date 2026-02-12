@@ -276,6 +276,12 @@
         // Load preparations from server
         async function loadPreparations() {
             try {
+                // Reset history for fresh game session
+                const resetResponse = await fetch('/api/reset_history');
+                if (!resetResponse.ok) {
+                    console.warn('Failed to reset history, continuing anyway');
+                }
+                
                 const response = await fetch('/api/preparations');
                 preparations = await response.json();
                 displayPreparations(preparations);

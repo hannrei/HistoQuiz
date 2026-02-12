@@ -27,6 +27,9 @@ class QuizHTTPHandler(http.server.SimpleHTTPRequestHandler):
         # API endpoint to start a new round
         elif parsed_path.path == '/api/new_round':
             self.send_json(self.new_round())
+        # API endpoint to reset the game history
+        elif parsed_path.path == '/api/reset_history':
+            self.send_json(self.reset_history())
         else:
             # Serve static files (if any)
             super().do_GET()
@@ -82,6 +85,14 @@ class QuizHTTPHandler(http.server.SimpleHTTPRequestHandler):
             'id': QuizHTTPHandler.current_secret.id,
             'link': QuizHTTPHandler.current_secret.link
         }
+    
+    def reset_history(self):
+        """Reset the preparation history for a new game session"""
+        if not self.repo:
+            return {'status': 'error', 'message': 'Repository not initialized. Please restart the server.'}
+        
+        self.repo.reset_history()
+        return {'status': 'success', 'message': 'History reset'}
     
     def log_message(self, format, *args):
         """Custom log message to reduce verbosity"""
